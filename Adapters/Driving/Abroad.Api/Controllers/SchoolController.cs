@@ -1,5 +1,4 @@
 ﻿using Abroad.Domain.Entities;
-using Abroad.Domain.Extensions;
 using Abroad.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +10,16 @@ namespace Abroad.Api.Controllers
     {
         private readonly IRepository<School, SchoolId> _repository;
 
-        public SchoolController(IRepository<School, SchoolId> repository)
+        private readonly IUnityOfWork _unityOfWork;
+
+        public SchoolController(IRepository<School, SchoolId> repository, IUnityOfWork unityOfWork)
         {
             _repository = repository;
+            _unityOfWork = unityOfWork;
         }
 
         [HttpPost]
-        public ActionResult<School> Post(string name)
+        public async Task<ActionResult<School>> Post(string name)
         {
             School school = new(Guid.NewGuid(), name);
 
@@ -28,10 +30,19 @@ namespace Abroad.Api.Controllers
 
             school.AddCourse("Course " + hashcode);
 
-            school.Id.MustBe();
-            school.Id.MustNotBeNull();
+            var result = await _repository.Add(school);
 
-            var result = _repository.Add(school);
+            await _unityOfWork.Commit();
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Get()
+        {
+            var result = _repository.GetAll();
+
+            var x = result.ToList();
 
             return Ok(result);
         }
