@@ -1,4 +1,5 @@
 ﻿using Abroad.Domain.Entities.Base;
+using System.Linq.Expressions;
 
 namespace Abroad.Domain.Repositories
 {
@@ -8,6 +9,6 @@ namespace Abroad.Domain.Repositories
 
         Task<TEntity> Get(TID ID);
 
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes);
     }
 }

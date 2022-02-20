@@ -1,6 +1,8 @@
 ﻿using Abroad.Domain.Entities.Base;
 using Abroad.Domain.Repositories;
 using Abroad.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Abroad.Infrastructure.Repositories
 {
@@ -31,9 +33,16 @@ namespace Abroad.Infrastructure.Repositories
                 .FindAsync(ID)!;
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
         {
-            return _context.Set<TEntity>();
+            var query = _context
+                .Set<TEntity>()
+                .AsNoTracking();
+
+            query = includes
+                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+
+            return query;
         }
     }
 }

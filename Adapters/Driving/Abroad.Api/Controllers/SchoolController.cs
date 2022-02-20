@@ -24,20 +24,19 @@ namespace Abroad.Api.Controllers
             School school = new(Guid.NewGuid(), name);
 
             school.AddCourse("Course 123");
+            school.AddCourse("Course 456");
+            school.AddCourse("Course 789");
 
-            var result = await _repository.Add(school);
-
+            await _repository.Add(school);
             await _unityOfWork.Commit();
 
-            return Ok(result);
+            return Ok(school);
         }
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var result = _repository.GetAll();
-
-            var x = result.ToList();
+            var result = _repository.GetAll(includes: s => s.Courses);
 
             return Ok(result);
         }
