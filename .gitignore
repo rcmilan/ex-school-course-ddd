@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# SQLite
+/Adapters/Driving/Abroad.Api/db/abroad.sqlite3-wal
+/Adapters/Driving/Abroad.Api/db/abroad.sqlite3-shm
+/Adapters/Driving/Abroad.Api/db/abroad.sqlite3
