@@ -11,7 +11,7 @@ namespace Abroad.Infrastructure.Context.Configuration
             builder.HasKey(c => c.CourseId);
             builder.OwnsOne(c => c.Id);
             builder.OwnsOne(c => c.ParentId);
-            builder.OwnsOne(c => c.Name);
+            builder.Property(c => c.Name);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Abroad.Infrastructure.Context.Configuration
         {
             builder.HasKey(s => s.SchoolId);
             builder.OwnsOne(s => s.Id);
-            builder.OwnsOne(s => s.Name);
+            builder.Property(s => s.Name);
         }
     }
 }

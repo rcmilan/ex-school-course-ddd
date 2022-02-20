@@ -9,24 +9,22 @@ namespace Abroad.Infrastructure.Context
         public AbroadContext(DbContextOptions<AbroadContext> options) : base(options)
         {
             Database.EnsureCreated();
-            //Database.Migrate();
+            Database.Migrate();
         }
 
         public DbSet<School> Schools { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.EnableSensitiveDataLogging();
-
             base.OnConfiguring(optionsBuilder);
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new SchoolEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CourseEntityTypeConfiguration());
-
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
