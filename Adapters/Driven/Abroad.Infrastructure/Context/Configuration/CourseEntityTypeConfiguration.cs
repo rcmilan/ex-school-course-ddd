@@ -8,9 +8,8 @@ namespace Abroad.Infrastructure.Context.Configuration
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
-            builder.HasKey(c => c.CourseId);
-            builder.OwnsOne(c => c.Id);
-            builder.OwnsOne(c => c.ParentId);
+            builder.HasKey(c => c.Id);
+            //builder.OwnsOne(c => c.ParentId);
             builder.Property(c => c.Name);
         }
     }

@@ -2,12 +2,12 @@
 
 namespace Abroad.Domain.Repositories
 {
-    public interface IRepository<TEntity, TID>
-        where TEntity : AggregateRoot<TID>
-        where TID : Value<TID>
+    public interface IRepository<TEntity, TID> where TEntity : AggregateRoot<TID>
     {
         Task<TEntity> Add(TEntity entity);
 
         Task<TEntity> Get(TID ID);
+
+        IQueryable<TEntity> GetAll();
     }
 }

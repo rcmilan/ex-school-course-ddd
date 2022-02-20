@@ -3,37 +3,27 @@ using Abroad.Domain.Exceptions;
 
 namespace Abroad.Domain.Entities
 {
-    public class Course : Entity<CourseId>
+    public class Course : Entity<Guid>
     {
-        #region Persistence
-
-        protected Course()
-        {
-        }
-
-        public Guid CourseId
-        { get => Id.Value; set { } }
-
-        #endregion Persistence
-
-        #region Entity State
-
-        public string Name { get; private set; } = default!;
-        public SchoolId ParentId { get; private set; } = default!;
-
-        #endregion Entity State
-
         public Course(Action<object> applier) : base(applier)
         {
         }
+
+        protected Course()
+        {
+            // Utilizado pelo EFCore
+        }
+
+        public string Name { get; private set; } = default!;
+        public Guid ParentId { get; private set; } = default!;
 
         protected override void When(object @event)
         {
             switch (@event)
             {
                 case Events.Course.Create e:
-                    ParentId = new SchoolId(e.ParentId);
-                    Id = new CourseId(e.Id);
+                    ParentId = e.ParentId;
+                    Id = e.Id;
                     Name = e.Name;
 
                     break;
@@ -42,16 +32,5 @@ namespace Abroad.Domain.Entities
                     throw new UnsupportedDomainEventException(@event);
             }
         }
-    }
-
-    public class CourseId : Value<CourseId>
-    {
-        public CourseId(Guid value) => Value = value;
-
-        protected CourseId()
-        {
-        }
-
-        public Guid Value { get; }
     }
 }

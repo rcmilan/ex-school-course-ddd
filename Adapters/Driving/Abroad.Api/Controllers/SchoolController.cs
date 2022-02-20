@@ -8,11 +8,11 @@ namespace Abroad.Api.Controllers
     [ApiController]
     public class SchoolController : ControllerBase
     {
-        private readonly IRepository<School, SchoolId> _repository;
+        private readonly IRepository<School, Guid> _repository;
 
         private readonly IUnityOfWork _unityOfWork;
 
-        public SchoolController(IRepository<School, SchoolId> repository, IUnityOfWork unityOfWork)
+        public SchoolController(IRepository<School, Guid> repository, IUnityOfWork unityOfWork)
         {
             _repository = repository;
             _unityOfWork = unityOfWork;
@@ -23,12 +23,7 @@ namespace Abroad.Api.Controllers
         {
             School school = new(Guid.NewGuid(), name);
 
-            if (school.Id.Equals(Guid.Empty))
-                return Problem();
-
-            var hashcode = school.Id.GetHashCode();
-
-            school.AddCourse("Course " + hashcode);
+            school.AddCourse("Course 123");
 
             var result = await _repository.Add(school);
 

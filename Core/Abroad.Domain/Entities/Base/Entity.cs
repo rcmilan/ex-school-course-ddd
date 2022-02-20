@@ -2,7 +2,7 @@
 
 namespace Abroad.Domain.Entities.Base
 {
-    public abstract class Entity<TID> : IInternalEventHandler where TID : Value<TID>
+    public abstract class Entity<TID> : IInternalEventHandler
     {
         private readonly Action<object> _applier = default!;
 

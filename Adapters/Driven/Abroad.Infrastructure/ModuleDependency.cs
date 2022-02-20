@@ -13,7 +13,7 @@ namespace Abroad.Infrastructure
         {
             services.AddDbContext<AbroadContext>(options => options.UseSqlite($"Data Source=./db/abroad.sqlite3;"));
 
-            services.AddScoped<IRepository<School, SchoolId>, Repository<School, SchoolId>>();
+            services.AddScoped<IRepository<School, Guid>, Repository<School, Guid>>();
             services.AddScoped<IUnityOfWork, EFCoreUnityOfWork>();
         }
     }

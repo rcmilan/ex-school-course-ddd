@@ -4,9 +4,7 @@ using Abroad.Infrastructure.Context;
 
 namespace Abroad.Infrastructure.Repositories
 {
-    public class Repository<TEntity, TID> : IRepository<TEntity, TID>, IDisposable
-        where TEntity : AggregateRoot<TID>
-        where TID : Value<TID>
+    public class Repository<TEntity, TID> : IDisposable, IRepository<TEntity, TID> where TEntity : AggregateRoot<TID>
     {
         private readonly AbroadContext _context;
 
@@ -31,6 +29,11 @@ namespace Abroad.Infrastructure.Repositories
             return await _context
                 .Set<TEntity>()
                 .FindAsync(ID)!;
+        }
+
+        public IQueryable<TEntity> GetAll()
+        {
+            return _context.Set<TEntity>();
         }
     }
 }

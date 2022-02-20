@@ -2,7 +2,7 @@
 
 namespace Abroad.Domain.Entities.Base
 {
-    public abstract class AggregateRoot<TID> : IInternalEventHandler where TID : Value<TID>
+    public abstract class AggregateRoot<TID> : IInternalEventHandler
     {
         private readonly List<object> _changes;
 
